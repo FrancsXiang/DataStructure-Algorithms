@@ -7,6 +7,7 @@ void insertion_sort(int* s,int n) {
 	for(int i=0;i<n-1;i++) {
 		for(int j=i;j>=0;j--) {
 			if(s[j] > s[j+1]) swap(s[j],s[j+1]);
+			else break;
 		}
 	}
 }

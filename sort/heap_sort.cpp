@@ -32,7 +32,6 @@ int s[MAXN];
 
 int main()
 {
-	int i;
 	int n;
 	srand(time(0));
 	for(int i=0;i<n;i++) s[i] = rand() % 1000 + 1;

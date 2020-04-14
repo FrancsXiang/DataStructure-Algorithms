@@ -41,7 +41,7 @@ int main()
 				scanf("%d",&map[i][j]);
 			}
 		}
-		printf("%d\n",djkstra(0));
 	}
+	djkstra(0);
 	return 0;
 }

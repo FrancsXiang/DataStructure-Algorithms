@@ -1,5 +1,5 @@
 /*
-This is a totaly oop implementation of data_structure of double_linked_list which looks more standard and beautiful.
+This is a totaly oop implementation of data_structure of double_linked_list which looks more standard and beautiful.（generics supported）
 */
 #include <iostream>
 #include <cstdio>

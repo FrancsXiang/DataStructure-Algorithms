@@ -1,3 +1,6 @@
+/*
+This is a totaly oop implementation of data_structure of double_linked_list which looks more standard and beautiful.
+*/
 #include <iostream>
 #include <cstdio>
 using namespace std;

@@ -18,6 +18,7 @@ class DLL {
 		int len;
 		node<T>* head;
 		DLL();
+		~DLL();
 		int get_length();
 		node<T>* get_prev(node<T>* site);
 		node<T>* get_next(node<T>* site);
@@ -31,6 +32,22 @@ DLL<T>::DLL() {
 	len = 0;
 	head = new node<T>;
 	head->r = NULL;
+}
+
+template<typename T>
+DLL<T>::~DLL() {
+	node<T>* cur = head->r;
+	delete head;
+	while (cur) {
+		if (cur->r) {
+			cur = cur->r;
+			delete cur->l;
+		}
+		else {
+			delete cur;
+			cur = NULL;
+		}
+	}
 }
 
 template<typename T>

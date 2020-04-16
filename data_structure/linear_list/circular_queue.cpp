@@ -78,7 +78,7 @@ int main()
 	}
 	catch (const char* msg)
 	{
-		cout << msg << endl;
+		cerr << msg << endl;
 	}
 	return 0;
 }

@@ -10,7 +10,7 @@ public:
 	~CQ();
 	T pop();
 	T top();
-	void push(int val);
+	void push(T val);
 	bool empty();
 	bool full();
 private:
@@ -46,7 +46,7 @@ bool CQ<T>::full() {
 }
 
 template<typename T>
-void CQ<T>::push(int val) {
+void CQ<T>::push(T val) {
 	if (full()) throw "The queue is full!";
 	container[rear] = val;
 	rear = (rear + 1) % max_vol;

@@ -22,7 +22,7 @@ class DLL {
 		int get_length();
 		node<T>* get_prev(node<T>* site);
 		node<T>* get_next(node<T>* site);
-		void insert(int val, int index);
+		void insert(T val, int index);
 		T erase(int index);
 		void show_list();
 };
@@ -66,7 +66,7 @@ node<T>* DLL<T>::get_next(node<T>* site) {
 }
 
 template<typename T>
-void DLL<T>::insert(int val, int index) {
+void DLL<T>::insert(T val, int index) {
 	node<T>* p = new node<T>;
 	p->data = val;
 	node<T>* cur = head;

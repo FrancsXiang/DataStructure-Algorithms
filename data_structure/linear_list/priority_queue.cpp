@@ -23,7 +23,7 @@ public:
 	~PQ();
 	T front();
 	void pop();
-	void push(int val);
+	void push(T val);
 private:
 	int len;
 	node<T>* tree;
@@ -79,7 +79,7 @@ node<T>* PQ<T>::find_node(int cur, node<T>* root) {
 }
 
 template<typename T>
-void PQ<T>::push(int val) {
+void PQ<T>::push(T val) {
 	if (len == 0) {
 		tree = new node<T>;
 		tree->data = val;

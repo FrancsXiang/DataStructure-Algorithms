@@ -22,7 +22,7 @@ public:
 	T top();
 	T pop();
 	bool empty();
-	void push(int val);
+	void push(T val);
 	void set_code(int code);
 	void clear();
 private:
@@ -51,7 +51,7 @@ T MST<T>::top() {
 }
 
 template<typename T>
-void MST<T>::push(int val) {
+void MST<T>::push(T val) {
 	node<T>* cur = new node<T>;
 	cur->data = val;
 	if (code == UP)

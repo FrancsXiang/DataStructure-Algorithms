@@ -17,13 +17,13 @@ priority_queue<PII,vector<PII>,cmp> que;
 void bestFirstSearch(int cur,int n,vector<vector<PII>>& edge, int* dist) {
 	for(int i=0;i<n;i++) dist[i] = INF;
 	dist[cur] = 0;
-	vis[cur] = true;
 	que.push({cur,0});
 	while(!que.empty()) {
 		auto item = que.top();
 		que.pop();
 		int start = item.first;
-		int end,val; 
+		int end,val;
+		vis[start] = true; 
 		for(int i=0;i<edge[start].size();i++) {
 			end = edge[start][i].first;
 			if(vis[end]) continue;

@@ -50,6 +50,7 @@ vector<PII> get_path(PII p) {
 		else break;
 	}
 	reverse(res.begin(), res.end());
+	return res;
 }
 
 int main()

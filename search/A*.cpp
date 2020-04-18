@@ -1,5 +1,5 @@
 /*
-This file is a search algorithm of A*(not tested).
+This file is a search algorithm of A*.
 */
 #include <iostream>
 #include <set>

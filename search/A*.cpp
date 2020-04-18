@@ -8,8 +8,9 @@ This file is a search algorithm of A*(not tested).
 #include <algorithm>
 #include <cstdlib>
 #include <ctime>
-#define MAXN 50
-#define NOISE 300
+#include <cstring>
+#define MAXN 20
+#define NOISE 100
 using namespace std;
 typedef pair<int, int> PII;
 
@@ -53,6 +54,20 @@ vector<PII> get_path(PII p) {
 	return res;
 }
 
+void print(vector<PII>& path) {
+	int map[MAXN][MAXN];
+	memset(map, 0, sizeof(map));
+	for (auto& it : obstacle) map[it.first][it.second] = 2;
+	for (auto& it : path) map[it.first][it.second] = 1;
+	for (int i = 0; i < MAXN; i++) {
+		for (int j = 0; j < MAXN; j++) {
+			if (j) cout << " ";
+			cout << map[i][j];
+		}
+		cout << endl;
+	}
+}
+
 int main()
 {
 	srand(time(0));
@@ -62,9 +77,10 @@ int main()
 	dist[0][0] = 0;
 	open.push(node(start, dist[0][0] + cheby_dist(0, 0)));
 	seen.insert(start);
-	while (!open.size()) {
+	while (open.size()) {
 		auto item = open.top();
 		auto site = item.point;
+		cout << item.cost << endl;
 		auto last_cost = dist[site.first][site.second];
 		if (site == dst) {
 			path = get_path(site);
@@ -75,7 +91,7 @@ int main()
 		for (int i = 0; i < 3; i++) {
 			for (int j = 0; j < 3; j++) {
 				int x = site.first + dx[i];
-				int y = site.second + dy[i];
+				int y = site.second + dy[j];
 				if (is_valid(x, y)) {
 					auto cur_cost = last_cost + 1;
 					if (!seen.count(PII(x, y)) || cur_cost < dist[x][y]) {
@@ -88,7 +104,6 @@ int main()
 			}
 		}
 	}
-	if (path.size()) for (auto& it : path) cout << "(" << it.first << " " << it.second << " )" << endl;
-	else cout << "no possible way existed!";
+	print(path);
 	return 0;
 }

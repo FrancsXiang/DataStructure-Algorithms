@@ -64,7 +64,7 @@ int main()
 	while (!open.size()) {
 		auto item = open.top();
 		auto site = item.point;
-		auto last_cost = item.cost;
+		auto last_cost = dist[site.first][site.second];
 		if (site == dst) {
 			path = get_path(site);
 			break;

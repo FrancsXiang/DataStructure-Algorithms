@@ -1,6 +1,9 @@
+/*
+This file is a search algorithm of A*(not tested).
+*/
 #include <iostream>
 #include <set>
-#include <unordered_map>
+#include <map>
 #include <queue>
 #include <algorithm>
 #include <cstdlib>
@@ -28,7 +31,7 @@ struct cmp {
 
 set<PII> obstacle, close, seen;
 priority_queue<node, vector<node>, cmp> open;
-unordered_map<PII, PII> parent;
+map<PII, PII> parent;
 
 int cheby_dist(int x1, int y1) {
 	return max(abs(x1 - MAXN + 1), abs(y1 - MAXN + 1));

@@ -1,5 +1,5 @@
 /*
-The file implemented add and sub ops,I will finish the multi and div ops soon!
+The file implemented add and sub ops,I will finish the multi and div ops soon!(allow leading zero exists)
 */
 #include <iostream>
 #include <algorithm>

@@ -6,7 +6,7 @@ int main()
 {
 	LL n,cnt;
 	cin >> n;
-	for (int i = 2; i * i <= n; i++) {
+	for (LL i = 2; i * i <= n; i++) {
 		if (n % i == 0) {
 			for (cnt = 0; !(n % i) ; cnt++) n /= i;
 			cout << i << " ";

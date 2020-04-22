@@ -1,5 +1,5 @@
 /*
-This is a release file of implementation of BigInteger.Works Well!(add/sub/multiply/div(mod) ops included)
+This is a release file of implementation of BigInteger.Works Well!(add/sub/multiply/div(mod) ops included with leading zero supported)
 */
 #include <iostream>
 #include <algorithm>

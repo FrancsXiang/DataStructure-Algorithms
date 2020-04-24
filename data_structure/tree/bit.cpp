@@ -1,6 +1,6 @@
 #include <iostream>
 #include <vector>
-//#define P_MODIFY //point modify,region query
+//#define P_MODIFY // point modify,region query
 #define R_MODIFY //region modify,point query
 using namespace std;
 typedef long long LL;
@@ -60,22 +60,22 @@ int main()
 	try
 	{	
 		#ifdef P_MODIFY
-      for (int i = 0; i < 10; i++) con.push_back(i);
-      BIT bt(con);
-      cout << bt.search(4, 6) << endl;
-      bt.update(4, 6);
-      cout << bt.search(0, 5) << endl;
+			for (int i = 0; i < 10; i++) con.push_back(i);
+			BIT bt(con);
+			cout << bt.search(4, 6) << endl;
+			bt.update(4, 6);
+			cout << bt.search(0, 5) << endl;
 		#else
-      for (int i = 0; i < 10; i++) con.push_back(i);
-      diff.resize(con.size());
-      diff[0] = con[0];
-      for (int i = 1; i < 10; i++) diff[i] = con[i] - con[i - 1];
-      //index i to j added val,query point with index
-      BIT bt(diff);
-      cout << bt.search(0, 3) << endl;
-      bt.update(3, 1);
-      bt.update(8, -1);
-      cout << bt.search(0, 7) << endl;
+			for (int i = 0; i < 10; i++) con.push_back(i);
+			diff.resize(con.size());
+			diff[0] = con[0];
+			for (int i = 1; i < 10; i++) diff[i] = con[i] - con[i - 1];
+			//index i to j added val,query point with index
+			BIT bt(diff);
+			cout << bt.search(0, 3) << endl;
+			bt.update(3, 1);
+			bt.update(8, -1);
+			cout << bt.search(0, 7) << endl;
 		#endif
 	}
 	catch (const char* msg)

@@ -30,6 +30,7 @@ void limit_multi_pack() {
 		else {
 			//leverage the binary idea,all solution could be made up of binary nums.
 			//so you can split it into several parts which could be settled by zero_one_pack solver.
+			//i.e. you can split 2^0...2^k/2^k+1...num[i] two groups to prove that the num(>=1&&<=num[i]) inclcuded will be visit by all parts.
 			int k = 1;
 			while (k < num[i]) {
 				zero_one_pack(vol[i] * k, val[i] * k);

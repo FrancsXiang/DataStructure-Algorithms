@@ -16,7 +16,7 @@ inline void complete_pack(int c,int w) {
 	for (int i = c; i <= v; i++) res[i] = max(res[i], res[i - c] + w);
 }
 
-inline void one_zero_pack(int c, int w) {
+inline void zero_one_pack(int c, int w) {
 	for (int i = v; i >= c; i--) res[i] = max(res[i], res[i - c] + w);
 }
 
@@ -32,7 +32,7 @@ void limit_multi_pack() {
 			//so you can split it into several parts which could be settled by zero_one_pack solver.
 			int k = 1;
 			while (k < num[i]) {
-				one_zero_pack(vol[i] * k, val[i] * k);
+				zero_one_pack(vol[i] * k, val[i] * k);
 				num[i] -= k;
 				k <<= 1;
 			}

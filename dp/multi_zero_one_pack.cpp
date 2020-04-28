@@ -6,6 +6,7 @@ using namespace std;
 
 // if you want the full pack,initialize res[0] = 0,res[1:] = -inf
 // or you want the maximum value, initialize res[:] = 0;
+//you could also use cost-effective sort to solve
 void orgin() { 
 	int vol[MAXN];
 	int val[MAXN];

@@ -36,7 +36,7 @@ void limit_multi_pack() {
 				num[i] -= k;
 				k <<= 1;
 			}
-			complete_pack(vol[i] * k, val[i] * k);
+			zero_one_pack(vol[i] * k, val[i] * k);
 		}
 	}
 }

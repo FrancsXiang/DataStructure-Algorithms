@@ -20,6 +20,7 @@ int main()
 			}
 		}
 		if(index != -1) dp[i] = dp[index] + 1;
+		else dp[i] = 1;
 	}
 	return 0;
 }

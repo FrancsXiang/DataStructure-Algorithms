@@ -12,8 +12,8 @@ int main()
 	string s;
 	int len, index;
 	for (int i = 0; i < s.length(); i++) {
+		len = index = -1;
 		for (int j = 0; j < i; j++) {
-			len = index = -1;
 			if (s[j] < s[i] && dp[j] > len) {
 				index = j;
 				len = dp[j];

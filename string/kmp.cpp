@@ -16,7 +16,7 @@ void getNext(string m,vector<int>& next) {
 			next[i] = k;
 		}
 		else
-			k = next[k]; // divide into transitive smaller symmetrical block to find the most bigger pair.
+			k = next[k]; // divide into smaller transitive symmetrical block to find the most bigger pair.
 	}
 }
 

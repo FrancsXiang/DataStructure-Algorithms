@@ -17,7 +17,7 @@ int main()
 	for (int i = 1; i <= s1.length(); i++) {
 		for (int j = 1; j <= s2.length(); j++) {
 			mini = min(len[i][j - 1] + 1, len[i - 1][j] + 1);
-			if (s1[i - 1] == s2[j - 1]) mini = min(mini, len[i - 1][j - 1] + 1);
+			mini = min(mini, len[i - 1][j - 1] + !(s1[i - 1] == s2[j - 1]));
 			len[i][j] = mini;
 		}
 	}

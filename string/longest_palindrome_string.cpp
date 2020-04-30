@@ -69,5 +69,5 @@ int Manacher(string s) {
 		}
 		res = max(res, r[i] - 1);
 	}
-	return res;
+	return 2 * res - 1;
 }

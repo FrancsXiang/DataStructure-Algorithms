@@ -33,8 +33,8 @@ int dp(string s) {
 	int res = 0, len = s.length();
 	vector<vector<bool>> dp(len, vector<bool>(len + 1));
 	for (int i = 0; i < len; i++) {
-		dp[i][1] = true;
-		if (i && s[i] == s[i - 1]) dp[i][2] = true;
+		dp[i][1] = true, res = 1;
+		if (i && s[i] == s[i - 1]) dp[i][2] = true, res = 2;
 	}
 	for (int gap = 3; gap <= len; gap++) {
 		for (int i = gap - 1; i <= len - gap; i++) {

@@ -8,7 +8,7 @@ using namespace std;
 //longest_palindrome_string
 
 int brute_force(string s) {
-	int len = 1;
+	int len = 0;
 	for (int i = 1; i < s.length() - 1; i++) {
 		int j = i - 1;
 		int k = i + 1;
@@ -30,7 +30,7 @@ int brute_force(string s) {
 
 //dp[last_index][length] represent possibility of being a palindrome_string
 int dp(string s) {
-	int res = 1, len = s.length();
+	int res = 0, len = s.length();
 	vector<vector<bool>> dp(len, vector<bool>(len + 1));
 	for (int i = 0; i < len; i++) {
 		dp[i][1] = true;

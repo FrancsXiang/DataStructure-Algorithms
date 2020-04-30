@@ -57,7 +57,7 @@ int Manacher(string s) {
 	}
 	if (!s.length()) tmp.push_back('#');
 	s = tmp;
-	int pos = 0, max_right = 0, res = 1;
+	int pos = 0, max_right = 0, res = 0;
 	vector<int> r(s.length());
 	for (int i = 0; i < s.length(); i++) {
 		if (i < max_right) r[i] = min(r[2 * pos - i], max_right - i);
@@ -69,5 +69,5 @@ int Manacher(string s) {
 		}
 		res = max(res, r[i] - 1);
 	}
-	return 2 * res - 1;
+	return res;
 }

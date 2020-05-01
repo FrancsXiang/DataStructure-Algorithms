@@ -1,6 +1,4 @@
-/*
-  This file implements the data_structure of avl tree(beta).
-*/
+//There are bugs with the erase function.
 #include <iostream>
 #include <algorithm>
 #include <vector>
@@ -38,8 +36,9 @@ private:
 	node<T>* _insert(node<T>* root, T data);
 	node<T>* _erase(node<T>* root, T data);
 	bool _search(node<T>* root, T data);
-	T findMax(node<T>* root);
+	int balance(node<T>* root);
 	T findMin(node<T>* root);
+	bool valid(node<T>* root);
 };
 
 template<typename T>
@@ -119,46 +118,35 @@ node<T>* AVL<T>::_insert(node<T>* root, T data) {
 template<typename T>
 void AVL<T>::insert(T data) {
 	head = _insert(head,data);
+	if (!valid(head)) cout << "not balanced" << endl;
 } 
 
 template<typename T>
 node<T>* AVL<T>::_erase(node<T>* root, T data) {
-	if (!root) return root;
+	if (!root) return NULL;
 	else if (root->data == data) {
-		if (!root->l && !root->r) return NULL;
-		else if (root->l && !root->r) {
-			root->data = root->l->data;
-			delete root->l;
-			root->l = NULL;
+		if (root->l && root->r) {
+			root->data = findMin(root->r);
+			root->r = _erase(root->r, root->data);
 			return root;
 		}
-		else if (!root->l && root->r) {
-			root->data = root->r->data;
-			delete root->r;
-			root->r = NULL;
-			return root;
-		}
-		else {
-			int l_h = height(root->l); int r_h = height(root->r);
-			if (l_h >= r_h) {
-				root->data = findMax(root->l);
-				root->l = _erase(root->l, root->data);
-			}
-			else {
-				root->data = findMin(root->r);
-				root->r = _erase(root->r, root->data);
-			}
-			return root;
-		}
+		else
+			return root->l ? root->l : root->r;
 	}
 	else {
 		if (data < root->data) {
 			root->l = _erase(root->l, data);
-			if (height(root->r) - height(root->l) == 2) return data >= root->r->data ? l_rotate(root) : rl_rotate(root);
+			if (balance(root) < 1) {
+				if (balance(root->r) <= 0) return l_rotate(root);
+				else return rl_rotate(root);
+			}
 		}
 		else {
 			root->r = _erase(root->r, data);
-			if (height(root->l) - height(root->r) == 2) return data < root->l->data ? r_rotate(root) : lr_rotate(root);
+			if (balance(root) > 1) {
+				if (balance(root->l) >= 0) return r_rotate(root);
+				else return lr_rotate(root);
+			}
 		}
 		return root;
 	}
@@ -171,14 +159,15 @@ T AVL<T>::findMin(node<T>* root) {
 }
 
 template<typename T>
-T AVL<T>::findMax(node<T>* root) {
-	while (root->r) root = root->r;
-	return root->data;
+int AVL<T>::balance(node<T>* root) {
+	return root?(height(root->l) - height(root->r)):0;
 }
+
 
 template<typename T>
 void AVL<T>::erase(T data) {
 	head = _erase(head,data);
+	if (!valid(head)) cout << "not balanced" << endl;
 }
 
 template<typename T>
@@ -210,15 +199,28 @@ bool AVL<T>::search(T data) {
 	return _search(head, data);
 }
 
+template<typename T>
+bool AVL<T>::valid(node<T>* root) {
+	if (root) {
+		if (abs(height(root->l) - height(root->r)) <= 1) return valid(root->l) && valid(root->r);
+		else return false;
+	}
+	else
+		return true;
+}
+
 int main()
 {
 	AVL<int> tree;
 	srand(time(0));
-	for (int i = 0; i < 10; i++) tree.insert(rand() % 1000 + 1);
+	for (int i = 0; i < 10; i++) tree.insert(rand()%1000 + 1);
 	auto res = tree.sort();
 	for (auto& it : res) cout << it << " "; cout << endl;
-	for (auto& it : res) if (rand() / double(RAND_MAX) > 0.5) tree.erase(it);
-	res = tree.sort();
-	for (auto& it : res) cout << it << " "; cout << endl;
+	int cnt = 0;
+	for (auto& it : res)  if (rand() / double(RAND_MAX) > 0.5) {
+		cout << cnt << ": " << it  << endl, tree.erase(it), cnt++;
+		res = tree.sort();
+		for (auto& it : res) cout << it << " "; cout << endl;
+	}
 	return 0;
 }

@@ -4,6 +4,8 @@
 #include <iostream>
 #include <algorithm>
 #include <vector>
+#include <cstdlib>
+#include <ctime>
 using namespace std;
 
 template<typename T>
@@ -27,7 +29,7 @@ private:
 	node<T>* head;
 	vector<T> con;
 	int height(node<T>* root);
-	void realise_space(node<T>* root);
+	void release_space(node<T>* root);
 	void in_order(node<T>* root);
 	node<T>* l_rotate(node<T>* root);
 	node<T>* r_rotate(node<T>* root);
@@ -50,17 +52,17 @@ AVL<T>::AVL()
 template<typename T>
 AVL<T>::~AVL()
 {
-	realise_space(head);
+	release_space(head);
 }
 
 template<typename T>
 int AVL<T>::height(node<T>* root) {
 	if (!root) return 0;
-	else return max(root->l, root->r) + 1;
+	else return max(height(root->l), height(root->r)) + 1;
 }
 
 template<typename T>
-void AVL<T>::realise_space(node<T>* root) {
+void AVL<T>::release_space(node<T>* root) {
 	if (root) {
 		release_space(root->l); release_space(root->r);
 		delete root;
@@ -206,4 +208,17 @@ bool AVL<T>::_search(node<T>* root, T data) {
 template<typename T>
 bool AVL<T>::search(T data) {
 	return _search(head, data);
+}
+
+int main()
+{
+	AVL<int> tree;
+	srand(time(0));
+	for (int i = 0; i < 10; i++) tree.insert(rand() % 1000 + 1);
+	auto res = tree.sort();
+	for (auto& it : res) cout << it << " "; cout << endl;
+	for (auto& it : res) if (rand() / double(RAND_MAX) > 0.5) tree.erase(it);
+	res = tree.sort();
+	for (auto& it : res) cout << it << " "; cout << endl;
+	return 0;
 }

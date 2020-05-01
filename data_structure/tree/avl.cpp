@@ -140,11 +140,11 @@ node<T>* AVL<T>::_erase(node<T>* root, T data) {
 			int l_h = height(root->l); int r_h = height(root->r);
 			if (l_h >= r_h) {
 				root->data = findMax(root->l);
-				root->l = delete(root->l, root->data);
+				root->l = _erase(root->l, root->data);
 			}
 			else {
 				root->data = findMin(root->r);
-				root->r = delete(root->r, root->data);
+				root->r = _erase(root->r, root->data);
 			}
 			return root;
 		}

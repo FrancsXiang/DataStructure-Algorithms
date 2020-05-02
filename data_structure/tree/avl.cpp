@@ -27,7 +27,7 @@ public:
 	bool search(T data);
 	void debug();
 private:
-	node<T>* head;
+	node<T>*p,*head;
 	vector<T> con;
 	int height(node<T>* root);
 	void release_space(node<T>* root);
@@ -103,7 +103,7 @@ node<T>* AVL<T>::rl_rotate(node<T>* root) {
 template<typename T>
 node<T>* AVL<T>::_insert(node<T>* root, T data) {
 	if (!root) {
-		node<T>* p = new node<T>(data);
+		p = new node<T>(data); //avoid wild_pointer_explosion
 		return p;
 	}
 	else {

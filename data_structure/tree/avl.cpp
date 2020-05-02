@@ -1,4 +1,6 @@
-//There are bugs with the erase function.
+/*
+	This file implements the data_structure of avl tree.(release_version)
+*/
 #include <iostream>
 #include <algorithm>
 #include <vector>
@@ -23,6 +25,7 @@ public:
 	void erase(T data);
 	vector<T> sort();
 	bool search(T data);
+	void debug();
 private:
 	node<T>* head;
 	vector<T> con;
@@ -39,18 +42,19 @@ private:
 	int balance(node<T>* root);
 	T findMin(node<T>* root);
 	bool valid(node<T>* root);
+	void _debug(node<T>* root);
 };
 
 template<typename T>
 AVL<T>::AVL()
 {
 	head = NULL;
-	con.clear();
 }
 
 template<typename T>
 AVL<T>::~AVL()
 {
+	con.clear();
 	release_space(head);
 }
 
@@ -117,39 +121,31 @@ node<T>* AVL<T>::_insert(node<T>* root, T data) {
 
 template<typename T>
 void AVL<T>::insert(T data) {
-	head = _insert(head,data);
+	if (!search(data)) head = _insert(head,data);
 	if (!valid(head)) cout << "not balanced" << endl;
 } 
 
 template<typename T>
 node<T>* AVL<T>::_erase(node<T>* root, T data) {
 	if (!root) return NULL;
-	else if (root->data == data) {
+	if (data < root->data) root->l = _erase(root->l, data);
+	else if (data > root->data) root->r = _erase(root->r, data);
+	else {
 		if (root->l && root->r) {
 			root->data = findMin(root->r);
 			root->r = _erase(root->r, root->data);
-			return root;
-		}
-		else
-			return root->l ? root->l : root->r;
+		}else 
+			return  root->l ? root->l : root->r;
 	}
-	else {
-		if (data < root->data) {
-			root->l = _erase(root->l, data);
-			if (balance(root) < 1) {
-				if (balance(root->r) <= 0) return l_rotate(root);
-				else return rl_rotate(root);
-			}
-		}
-		else {
-			root->r = _erase(root->r, data);
-			if (balance(root) > 1) {
-				if (balance(root->l) >= 0) return r_rotate(root);
-				else return lr_rotate(root);
-			}
-		}
-		return root;
+	if (balance(root) < -1) {
+		if (balance(root->r) <= 0) return l_rotate(root);
+		else return rl_rotate(root);
 	}
+	if (balance(root) > 1) {
+		if (balance(root->l) >= 0) return r_rotate(root);
+		else return lr_rotate(root);
+	}
+	return root;
 }
 
 template<typename T>
@@ -209,18 +205,35 @@ bool AVL<T>::valid(node<T>* root) {
 		return true;
 }
 
+template<typename T>
+void AVL<T>::_debug(node<T>* root) {
+	if (root) {
+		if (root->l) cout << (root->data) << "->" << root->l->data << endl;
+		if (root->r) cout << (root->data) << "->" << root->r->data << endl;
+		_debug(root->l); _debug(root->r);
+	}
+}
+
+template<typename T>
+void AVL<T>::debug() {
+	_debug(head);
+}
+
 int main()
 {
 	AVL<int> tree;
 	srand(time(0));
-	for (int i = 0; i < 10; i++) tree.insert(rand()%1000 + 1);
+	for (int i = 0; i < 20; i++) tree.insert(rand() % 1000 + 1);
 	auto res = tree.sort();
 	for (auto& it : res) cout << it << " "; cout << endl;
 	int cnt = 0;
-	for (auto& it : res)  if (rand() / double(RAND_MAX) > 0.5) {
-		cout << cnt << ": " << it  << endl, tree.erase(it), cnt++;
-		res = tree.sort();
-		for (auto& it : res) cout << it << " "; cout << endl;
+	tree.debug();
+	for (auto& it : res)  if (!cnt || rand() / double(RAND_MAX) > 0.5) {
+		cout << cnt << ": " << it << endl; 
+		tree.erase(it); 
+		cnt++;
 	}
+	res = tree.sort();
+	for (auto& it : res) cout << it << " "; cout << endl;
 	return 0;
 }

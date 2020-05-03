@@ -13,7 +13,7 @@ struct cmp {
 	}
 };
 
-template<typename T>
+template<typename T> //similar to class-types
 struct _cmp {
 	_cmp() :state(0) {} //record state
 	T operator() (const T& a, const T& b) {

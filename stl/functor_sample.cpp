@@ -1,3 +1,6 @@
+/*
+   This file contains the basic usage of stl_functor.Other two similar methods:1.function_pointer_call 2.overload ops in class.
+*/
 #include <iostream>
 #include <string>
 #include <vector>

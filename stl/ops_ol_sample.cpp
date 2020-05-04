@@ -16,6 +16,15 @@ public:
 		++(*this);
 		return tmp;
 	}
+	INT& operator--() {
+		--(this->m_i);
+		return *this;
+	}
+	const INT operator--(int) {
+		INT tmp = *this;
+		--(*this);
+		return tmp;
+	}
 	int& operator*() const {
 		return (int&)m_i;
 	}

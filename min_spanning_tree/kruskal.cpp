@@ -2,8 +2,7 @@
 #include <cstring>
 #include <iostream>
 #include <algorithm>
-#define MAXN 502
-#define INF 65537
+#define MAXN 0xffffffff
 using namespace std;
 
 typedef struct edge {
@@ -11,7 +10,7 @@ typedef struct edge {
 	int weight;
 }E;
 
-E edge[m];
+E edge[MAXN];
 int f[MAXN],rec,sum;
 
 bool cmp(const E& a,const E& b) {
@@ -38,6 +37,7 @@ int main()
 {
 	int m,n,left,right,weight;
 	cin >> n >> m;
+	for(int i=0;i<n;i++) f[i] = i; //vertex begins with zero
 	for(int i=0;i<m;i++) {
 		cin >> left >> right >> weight;
 		edge[i].left = left;

@@ -22,5 +22,5 @@ int main()
 {
 	auto fc_1 = set_malloc_handler(add);
 	auto fc_2 = set_malloc_handler_beta(add);
-	fc_1(); fc_2();
+	(*fc_1)(); fc_2();
 }

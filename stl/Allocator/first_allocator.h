@@ -1,5 +1,5 @@
 #include <cstdlib>
-#define __THROW_BAD_ALLOC throw std::bad_alloc()
+#define __THROW_BAD_ALLOC throw std::bad_alloc
 
 class first_allocator
 {

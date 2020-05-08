@@ -1,4 +1,3 @@
-#include <iostream>
 #include <cstdlib>
 #define __THROW_BAD_ALLOC throw std::bad_alloc()
 

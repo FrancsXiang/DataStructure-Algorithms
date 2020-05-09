@@ -23,8 +23,8 @@ private:
 public:
 	static void* allocate(size_t n);
 	static void deallocate(void* p, size_t n);
-	//TODO static void* reallocate(void* p, size_t n);
-	static void* refill(size_t n,size_t blocks=20);
+	static void* reallocate(void* p, size_t old_size, size_t new_size);
+	static void* refill(size_t n, size_t blocks = 20);
 	static char* block_alloc(size_t n, size_t& block);
 };
 
@@ -36,7 +36,7 @@ sec_allocator::node* volatile sec_allocator::lists[n_lists] = { 0,0,0,0,0,0,0,0,
 size_t sec_allocator::round_up(size_t n) {
 	//lower_bytes must be 2^n
 	//return val, ceil(val) == k * lower_bytes(k>=1).
-	return ((n + low_bytes - 1) & ~(low_bytes - 1)); 
+	return ((n + low_bytes - 1) & ~(low_bytes - 1));
 }
 
 size_t sec_allocator::lists_offset(size_t n) {
@@ -54,7 +54,7 @@ void* sec_allocator::allocate(size_t n) {
 	return result;
 }
 
-void sec_allocator::deallocate(void* p,size_t n) {
+void sec_allocator::deallocate(void* p, size_t n) {
 	node* cur = (node*)p;
 	node* volatile* cur_list;
 	if (n > (size_t)up_bytes) { first_allocator::deallocate(p); return; }
@@ -63,7 +63,7 @@ void sec_allocator::deallocate(void* p,size_t n) {
 	*cur_list = cur;
 }
 
-void* sec_allocator::refill(size_t n,size_t blocks) { //refill the lists space and return one section block.
+void* sec_allocator::refill(size_t n, size_t blocks) { //refill the lists space and return one section block.
 	node* result, * cur, * next;
 	node* volatile* cur_list;
 	char* cur_block = block_alloc(n, blocks);
@@ -124,4 +124,15 @@ char* sec_allocator::block_alloc(size_t n, size_t& blocks) { //get several block
 		end = start + need;
 		return block_alloc(n, blocks);
 	}
+}
+
+//due to memory consecution,so you can't use realloc directly which could destroy the memory pool.
+void* sec_allocator::reallocate(void* p, size_t old_size, size_t new_size) {
+	if (old_size > up_bytes&& new_size > up_bytes) return first_allocator::reallocate(p, new_size);
+	if (round_up(old_size) == round_up(new_size)) return p;
+	void* result = allocate(new_size);
+	size_t copy_size = new_size > old_size ? old_size : new_size;
+	memcpy(result, p, copy_size);
+	deallocate(p, old_size);
+	return result;
 }

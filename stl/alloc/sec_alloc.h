@@ -128,7 +128,7 @@ char* sec_allocator::block_alloc(size_t n, size_t& blocks) { //get several block
 
 //due to memory consecution,so you can't use realloc directly which could destroy the memory pool.
 void* sec_allocator::reallocate(void* p, size_t old_size, size_t new_size) {
-	if (old_size > up_bytes&& new_size > up_bytes) return first_allocator::reallocate(p, new_size);
+	if (old_size > up_bytes && new_size > up_bytes) return first_allocator::reallocate(p, new_size);
 	if (round_up(old_size) == round_up(new_size)) return p;
 	void* result = allocate(new_size);
 	size_t copy_size = new_size > old_size ? old_size : new_size;

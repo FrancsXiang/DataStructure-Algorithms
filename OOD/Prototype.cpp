@@ -46,9 +46,12 @@ private:
 
 void client() {
 	prototype* a = new prototypeA("franc_zi", "hello world");
+	prototype* c = new prototypeA("franc", "hello world");
 	prototype* b = a->clone();
 	cout << b->getId() << endl;
 	cout << b->getField() << endl;
+	*c = *b;
+	cout << c->getId() << endl;
 }
 
 int main()

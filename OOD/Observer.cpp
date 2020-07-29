@@ -65,14 +65,15 @@ public:
 		message_from_subject = message_;
 		cout << "observer: " << this->id << " get a new message: " << message_from_subject << endl;
 	}
-	void suscribe(Subject* subject) {
+	void subscribe(Subject* subject) {
 		if (subject) {
 			if (this->subject) {
 				this->subject->dettach(this);
 				cout << "observer: " << this->id << " dettached with subject: " << this->subject->operation() << endl;
 			}
-			subject->attach(this);
-			cout << "observer: " << this->id << " attached with subject: " << subject->operation() << endl;
+			this->subject = subject;
+			this->subject->attach(this);
+			cout << "observer: " << this->id << " attached with subject: " << this->subject->operation() << endl;
 		}
 	}
 	void remove_subscribe() {

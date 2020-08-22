@@ -63,7 +63,7 @@ void sec_allocator::deallocate(void* p, size_t n) {
 	*cur_list = cur;
 }
 
-void* sec_allocator::refill(size_t n, size_t blocks) { //refill the lists space and return one section block.
+void* sec_allocator::refill(size_t n, size_t blocks=20) { //refill the lists space and return one section block.
 	node* result, * cur, * next;
 	node* volatile* cur_list;
 	char* cur_block = block_alloc(n, blocks);
@@ -118,7 +118,6 @@ char* sec_allocator::block_alloc(size_t n, size_t& blocks) { //get several block
 				}
 			}
 		}
-		end = 0;
 		start = (char*)first_allocator::allocate(need);// call first_allocator to handle.
 		heap_size += need;
 		end = start + need;

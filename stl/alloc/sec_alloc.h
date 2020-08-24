@@ -46,6 +46,7 @@ size_t sec_allocator::lists_offset(size_t n) {
 void* sec_allocator::allocate(size_t n) {
 	node* volatile* cur_list;
 	node* result;
+	n = round_up(n);
 	if (n > (size_t)up_bytes) return first_allocator::allocate(n);
 	cur_list = lists + lists_offset(round_up(n));
 	result = *cur_list;
@@ -57,8 +58,9 @@ void* sec_allocator::allocate(size_t n) {
 void sec_allocator::deallocate(void* p, size_t n) {
 	node* cur = (node*)p;
 	node* volatile* cur_list;
+	n = round_up(n);
 	if (n > (size_t)up_bytes) { first_allocator::deallocate(p); return; }
-	cur_list = lists + lists_offset(n); //n should be times of low_bytes obviously. 
+	cur_list = lists + lists_offset(n);
 	cur->next = *cur_list;
 	*cur_list = cur;
 }
